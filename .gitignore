@@ -1,0 +1,10 @@
+# build
+build/
+*.o
+*.a
+*.out
+*.wasm
+*.aot
+
+# editorr/tools
+.vscode/
