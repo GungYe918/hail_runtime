@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <wamr/include/wasm_export.h>
+#include <hail/common/config.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,7 +18,7 @@ extern "C" {
  * @param error_buf @param error_buf_size
  *  
  */
-wasm_module_t hail_load_module(const uint8_t *wasm_bytes, uint32_t size, 
+wasm_module_t hail_load_module(uint8_t *wasm_bytes, uint32_t size, 
                                     char *error_buf, uint32_t error_buf_size);
                                     
 /**

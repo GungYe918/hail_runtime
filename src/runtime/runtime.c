@@ -1,17 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <hail/common/config.h>
 #include <hail/runtime/runtime.h>
 #include <wamr/include/wasm_export.h>
 
-#ifndef HAIL_RUNTIME_HEAP_SIZE
-#warning "HAIL_RUNTIME_HEAP_SIZE not defined. Using default 2MB."
-#define HAIL_RUNTIME_HEAP_SIZE (2 * 1024 * 1024)
-#endif
-
-#ifndef STACK_SIZE
-#define STACK_SIZE (64 * 1024)
-#endif
 
 static uint8_t *internal_heap_buf = NULL;
 
