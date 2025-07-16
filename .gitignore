@@ -1,7 +1,6 @@
 # build
 build/
 *.o
-*.a
 *.out
 *.wasm
 *.aot
