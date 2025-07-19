@@ -2,8 +2,7 @@
 build/
 *.o
 *.out
-*.wasm
-*.aot
+
 
 # editorr/tools
 .vscode/

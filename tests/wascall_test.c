@@ -1,22 +1,40 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <hail/sys/wascall/wascall.h>
+#include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 
-int main(void) {
-    const char *msg = "Hello from wascall write!\n";
-    int32_t args[4];
+int main() {
+    // Step 1: 기본 핸들러 테이블 초기화
+    if (wascall_table_init() != 0) {
+        printf("[Test] wascall table init failed.\n");
+        return 1;
+    }
 
-    args[0] = 1; // fd
+    // Step 2: 출력할 메시지 준비
+    const char *msg = "Hello from wascall_write!\n";
+    size_t len = strlen(msg);
+    intptr_t ptr = (intptr_t)msg;
 
-    // 포인터를 32비트 2개로 분할
-    intptr_t ptr_val = (intptr_t)msg;
-    args[1] = (int32_t)(ptr_val & 0xFFFFFFFF);         // 하위
-    args[2] = (int32_t)((ptr_val >> 32) & 0xFFFFFFFF); // 상위
+    // Step 3: 포인터를 32비트로 분리
+    int32_t low  = (int32_t)(ptr & 0xFFFFFFFF);
+    int32_t high = (int32_t)(ptr >> 32);
 
-    args[3] = strlen(msg); // len
+    int32_t written = 0;
 
-    int32_t rets[1] = {0};
+    // Step 4: wascall_write 호출
+    int ret = wascall(WASCALL_WRITE,
+                      1,        // fd (stdout)
+                      low,      // low 32-bit of pointer
+                      high,     // high 32-bit of pointer
+                      (int32_t)len,  // length
+                      &written);     // return value pointer
 
-    int32_t result = wascall_dispatch(WASCALL_WRITE, args, rets);
+    // Step 5: 결과 확인
+    if (ret == 0) {
+        printf("[Test] wascall_write success. Bytes written: %d\n", written);
+    } else {
+        printf("[Test] wascall_write failed with ret = %d\n", ret);
+    }
+
+    return 0;
 }
