@@ -14,6 +14,7 @@ add_subdirectory(src/runtime)
 add_subdirectory(src/loader)
 add_subdirectory(src/utils)
 add_subdirectory(src/sys/api)
+add_subdirectory(src/module)
 add_subdirectory(src/sys/wascall)
 
 
@@ -22,6 +23,7 @@ add_subdirectory(src/sys/wascall)
 target_link_libraries(hail_test
     hail_runtime
     hail_loader
+    hail_module
     hail_utils
     hail_api
     hail_wascall

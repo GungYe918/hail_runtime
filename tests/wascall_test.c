@@ -1,4 +1,5 @@
 #include <hail/sys/wascall/wascall.h>
+#include <hail/module/module.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
@@ -35,6 +36,9 @@ int main() {
     } else {
         printf("[Test] wascall_write failed with ret = %d\n", ret);
     }
+
+    hail_module_t *mod = NULL;
+    hail_module_run(mod);
 
     return 0;
 }
